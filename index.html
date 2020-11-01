@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+      <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+      <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+      <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+      <script src="./controllers/MainController.js"></script>
+      <!-- With locals-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js" ></script>
+      <!-- Without locals-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js" ></script>
+      <link rel="stylesheet" href="./TavoCalendar-master/dist/tavo-calendar.css" />
+      <script src="./TavoCalendar-master/dist/tavo-calendar.js"></script>
+
+      <script src="https://kit.fontawesome.com/e8308597ca.js" crossorigin="anonymous"></script>
+
+    </head>
+
+<body ng-app="myApp" ng-controller="myCtrl">
+
+    <div style="text-align: center;">
+        <h1>Online Organizer</h1>
+    </div>
+    
+    <br><br>
+<div class="container">
+    <div class="row justify-content-md-center">
+        <div class="col-md-4">
+            <div id="calendar" class="calendar"></div>
+        </div>
+    
+        <div class="col-md-4">
+            <p id="testing"></p>
+            <ul ng-repeat="x in selectedDateArray | orderBy:'date'">
+                <li>{{x.title}}</li>
+            </ul>
+        </div>
+
+        <div class="col-md-4">
+            <input type="text" class="form-control-plaintext" readonly id="upcoming_event" ng-repeat="x in list | orderBy: 'date'" ng-hide="!$first" value="{{x.title}} on {{x.date}} at {{x.time}}">
+        </div>
+    </div>
+</div>
+
+<br>
+
+    <div class="contaner">
+        <div class="row justify-content-md-center">
+            <form class="form-inline" novalidate>
+                <div class="form-group mx-sm-3 mb-2">
+                  <input type="text" class="form-control" placeholder="Enter Event" ng-model="eventTitle">
+                </div>
+                <div class="form-group mx-sm-3 mb-2">
+                    <input type="date" id="eventDate" name="input" ng-model="eventDate" placeholder="DD/MM/YYYY" min="{{ minDate }}" required />
+                </div>
+                <div class="form-group mx-sm-3 mb-2">
+                    <input type="time" id="eventTime" name="input" ng-model="eventTime" placeholder="HH:MM:SS" required />
+                </div>
+                <button type="submit" class="mx-sm-3 mb-2 btn btn-primary" ng-click="addEvent()">Add Event</button>
+            </form>
+        </div>
+    </div>
+            <br><br><br><br>
+
+    <div class="container">
+        <ul class="list-group" ng-repeat="x in list | orderBy:'date'">
+            <li class="list-group-item list-group-item-info">
+                {{x.title}} on {{x.date | date: "dd-MM-yyyy"}} at {{x.time | date: "HH:mm:ss"}}
+                <i ng-click="deleteEvent($index)" class="fas fa-trash-alt float-right"></i>
+                <i ng-click="updateEvent($index)" class="far fa-edit float-right"></i>
+            </li>
+        </ul>
+    </div>
+    
+</body>
+</html>
